@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Sensor Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        table { margin: auto; border-collapse: collapse; width: 80%; }
+        th, td { border: 1px solid black; padding: 10px; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <h1>ESP32 Sensor Dashboard</h1>
+    <h2>Temperature: <span id="temperature">Loading...</span> °C</h2>
+    <h2>Humidity: <span id="humidity">Loading...</span> %</h2>
+    <h2>Pressure: <span id="pressure">Loading...</span> hPa</h2>
+    <h2>Gas Resistance: <span id="gas">Loading...</span> KΩ</h2>
+    <h2>IAQ: <span id="iaq">Loading...</span></h2>
+    <h2 id="motion-status">Loading...</h2>
+    <h3>Motion Log:</h3>
+    <table>
+        <tr><th>Time</th><th>Event</th></tr>
+        <!-- Log entries will go here -->
+    </table>
+    <script>
+        // JavaScript to fetch and update data from your ESP32
+        setInterval(() => {
+            fetch('http://your-esp32-ip-address')
+                .then(response => response.json())
+                .then(data => {
+                    // Parse and update data here
+                    document.getElementById('temperature').innerText = data.temperature;
+                    document.getElementById('humidity').innerText = data.humidity;
+                    document.getElementById('pressure').innerText = data.pressure;
+                    document.getElementById('gas').innerText = data.gas;
+                    document.getElementById('iaq').innerText = data.iaq;
+                    document.getElementById('motion-status').innerText = data.motion;
+                });
+        }, 5000);
+    </script>
+</body>
+</html>
